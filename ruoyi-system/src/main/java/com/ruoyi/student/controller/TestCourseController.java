@@ -2,6 +2,9 @@ package com.ruoyi.student.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +30,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2025-06-24
  */
+@Api("学生课程管理")
 @RestController
 @RequestMapping("/student/course")
 public class TestCourseController extends BaseController
@@ -37,6 +41,7 @@ public class TestCourseController extends BaseController
     /**
      * 查询课程列表
      */
+    @ApiOperation("查询课程列表")
     @PreAuthorize("@ss.hasPermi('student:course:list')")
     @GetMapping("/list")
     public TableDataInfo list(TestCourse testCourse)
@@ -49,6 +54,7 @@ public class TestCourseController extends BaseController
     /**
      * 导出课程列表
      */
+    @ApiOperation("导出课程列表")
     @PreAuthorize("@ss.hasPermi('student:course:export')")
     @Log(title = "课程", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -62,6 +68,7 @@ public class TestCourseController extends BaseController
     /**
      * 获取课程详细信息
      */
+    @ApiOperation("获取课程详细信息")
     @PreAuthorize("@ss.hasPermi('student:course:query')")
     @GetMapping(value = "/{courseId}")
     public AjaxResult getInfo(@PathVariable("courseId") Long courseId)
@@ -72,6 +79,7 @@ public class TestCourseController extends BaseController
     /**
      * 新增课程
      */
+    @ApiOperation("新增课程")
     @PreAuthorize("@ss.hasPermi('student:course:add')")
     @Log(title = "课程", businessType = BusinessType.INSERT)
     @PostMapping
@@ -83,6 +91,7 @@ public class TestCourseController extends BaseController
     /**
      * 修改课程
      */
+    @ApiOperation("修改课程")
     @PreAuthorize("@ss.hasPermi('student:course:edit')")
     @Log(title = "课程", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -94,6 +103,7 @@ public class TestCourseController extends BaseController
     /**
      * 删除课程
      */
+    @ApiOperation("删除课程")
     @PreAuthorize("@ss.hasPermi('student:course:remove')")
     @Log(title = "课程", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{courseIds}")

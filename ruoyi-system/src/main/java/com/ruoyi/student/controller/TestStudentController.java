@@ -2,6 +2,9 @@ package com.ruoyi.student.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +30,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2025-06-23
  */
+@Api("学生信息管理")
 @RestController
 @RequestMapping("/system/student")
 public class TestStudentController extends BaseController
@@ -37,6 +41,7 @@ public class TestStudentController extends BaseController
     /**
      * 查询学生列表
      */
+    @ApiOperation("查询学生列表")
     @PreAuthorize("@ss.hasPermi('system:student:list')")
     @GetMapping("/list")
     public TableDataInfo list(TestStudent testStudent)
@@ -49,6 +54,7 @@ public class TestStudentController extends BaseController
     /**
      * 导出学生列表
      */
+    @ApiOperation("导出学生列表")
     @PreAuthorize("@ss.hasPermi('system:student:export')")
     @Log(title = "学生", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -62,6 +68,7 @@ public class TestStudentController extends BaseController
     /**
      * 获取学生详细信息
      */
+    @ApiOperation("获取学生详细信息")
     @PreAuthorize("@ss.hasPermi('system:student:query')")
     @GetMapping(value = "/{studentId}")
     public AjaxResult getInfo(@PathVariable("studentId") Long studentId)
@@ -72,6 +79,7 @@ public class TestStudentController extends BaseController
     /**
      * 新增学生
      */
+    @ApiOperation("新增学生")
     @PreAuthorize("@ss.hasPermi('system:student:add')")
     @Log(title = "学生", businessType = BusinessType.INSERT)
     @PostMapping
@@ -83,6 +91,7 @@ public class TestStudentController extends BaseController
     /**
      * 修改学生
      */
+    @ApiOperation("修改学生")
     @PreAuthorize("@ss.hasPermi('system:student:edit')")
     @Log(title = "学生", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -94,6 +103,7 @@ public class TestStudentController extends BaseController
     /**
      * 删除学生
      */
+    @ApiOperation("删除学生")
     @PreAuthorize("@ss.hasPermi('system:student:remove')")
     @Log(title = "学生", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{studentIds}")
