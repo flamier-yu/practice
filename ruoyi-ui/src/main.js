@@ -35,6 +35,9 @@ import ImagePreview from "@/components/ImagePreview"
 import DictTag from '@/components/DictTag'
 // 字典数据组件
 import DictData from '@/components/DictData'
+// 弹出框获取其他表组件
+import DialogSelect from "@/components/DialogSelect/index";
+import DialogFormSelect from "@/components/DialogSelect/dialog";
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
@@ -55,6 +58,8 @@ Vue.component('Editor', Editor)
 Vue.component('FileUpload', FileUpload)
 Vue.component('ImageUpload', ImageUpload)
 Vue.component('ImagePreview', ImagePreview)
+Vue.component('DialogSelect', DialogSelect)
+Vue.component('DialogFormSelect', DialogFormSelect)
 
 Vue.use(directive)
 Vue.use(plugins)

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.student.mapper.TestScoreMapper">
+    
+    <resultMap type="TestScore" id="TestScoreResult">
+        <result property="scoreId"    column="score_id"    />
+        <result property="studentId"    column="student_id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="regularScore"    column="regular_score"    />
+        <result property="finalScore"    column="final_score"    />
+        <result property="totalScore"    column="total_score"    />
+        <result property="semester"    column="semester"    />
+    </resultMap>
+
+    <sql id="selectTestScoreVo">
+        select score_id, student_id, course_id, regular_score, final_score, total_score, semester from test_score
+    </sql>
+
+    <select id="selectTestScoreList" parameterType="TestScore" resultMap="TestScoreResult">
+        <include refid="selectTestScoreVo"/>
+        <where>  
+            <if test="studentId != null "> and student_id = #{studentId}</if>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="regularScore != null "> and regular_score = #{regularScore}</if>
+            <if test="finalScore != null "> and final_score = #{finalScore}</if>
+            <if test="totalScore != null "> and total_score = #{totalScore}</if>
+            <if test="semester != null  and semester != ''"> and semester = #{semester}</if>
+        </where>
+    </select>
+    
+    <select id="selectTestScoreByScoreId" parameterType="Long" resultMap="TestScoreResult">
+        <include refid="selectTestScoreVo"/>
+        where score_id = #{scoreId}
+    </select>
+
+    <insert id="insertTestScore" parameterType="TestScore" useGeneratedKeys="true" keyProperty="scoreId">
+        insert into test_score
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="studentId != null">student_id,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="regularScore != null">regular_score,</if>
+            <if test="finalScore != null">final_score,</if>
+            <if test="totalScore != null">total_score,</if>
+            <if test="semester != null">semester,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="studentId != null">#{studentId},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="regularScore != null">#{regularScore},</if>
+            <if test="finalScore != null">#{finalScore},</if>
+            <if test="totalScore != null">#{totalScore},</if>
+            <if test="semester != null">#{semester},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTestScore" parameterType="TestScore">
+        update test_score
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="studentId != null">student_id = #{studentId},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="regularScore != null">regular_score = #{regularScore},</if>
+            <if test="finalScore != null">final_score = #{finalScore},</if>
+            <if test="totalScore != null">total_score = #{totalScore},</if>
+            <if test="semester != null">semester = #{semester},</if>
+        </trim>
+        where score_id = #{scoreId}
+    </update>
+
+    <delete id="deleteTestScoreByScoreId" parameterType="Long">
+        delete from test_score where score_id = #{scoreId}
+    </delete>
+
+    <delete id="deleteTestScoreByScoreIds" parameterType="String">
+        delete from test_score where score_id in 
+        <foreach item="scoreId" collection="array" open="(" separator="," close=")">
+            #{scoreId}
+        </foreach>
+    </delete>
+</mapper>
