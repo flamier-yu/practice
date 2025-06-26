@@ -110,6 +110,12 @@ export function selectDictLabels(datas, value, separator) {
   return actions.join('').substring(0, actions.join('').length - 1)
 }
 
+// 回显自定义数据的字典(自定数组，需查询字段，行内字段数据)
+export function selecOwntDictLabel(data, strItem, rowData) {
+  var result = data.find(item => item[strItem] == rowData);
+  return result ? result : '';
+}
+
 // 字符串格式化(%s )
 export function sprintf(str) {
   var args = arguments, flag = true, i = 1

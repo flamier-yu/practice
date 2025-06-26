@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bbs.mapper.BbsLikeMapper">
+    
+    <resultMap type="BbsLike" id="BbsLikeResult">
+        <result property="likeId"    column="like_id"    />
+        <result property="postId"    column="post_id"    />
+        <result property="commentId"    column="comment_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectBbsLikeVo">
+        select like_id, post_id, comment_id, user_id, create_time from bbs_like
+    </sql>
+
+    <select id="selectBbsLikeList" parameterType="BbsLike" resultMap="BbsLikeResult">
+        <include refid="selectBbsLikeVo"/>
+        <where>  
+            <if test="postId != null "> and post_id = #{postId}</if>
+            <if test="commentId != null "> and comment_id = #{commentId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectBbsLikeByLikeId" parameterType="Long" resultMap="BbsLikeResult">
+        <include refid="selectBbsLikeVo"/>
+        where like_id = #{likeId}
+    </select>
+
+    <insert id="insertBbsLike" parameterType="BbsLike" useGeneratedKeys="true" keyProperty="likeId">
+        insert into bbs_like
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="postId != null">post_id,</if>
+            <if test="commentId != null">comment_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="postId != null">#{postId},</if>
+            <if test="commentId != null">#{commentId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBbsLike" parameterType="BbsLike">
+        update bbs_like
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="postId != null">post_id = #{postId},</if>
+            <if test="commentId != null">comment_id = #{commentId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where like_id = #{likeId}
+    </update>
+
+    <delete id="deleteBbsLikeByLikeId" parameterType="Long">
+        delete from bbs_like where like_id = #{likeId}
+    </delete>
+
+    <delete id="deleteBbsLikeByLikeIds" parameterType="String">
+        delete from bbs_like where like_id in 
+        <foreach item="likeId" collection="array" open="(" separator="," close=")">
+            #{likeId}
+        </foreach>
+    </delete>
+</mapper>

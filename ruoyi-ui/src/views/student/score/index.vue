@@ -271,12 +271,12 @@ export default {
   methods: {
     // 数据格式化
     studentIdFormat(row, column){
-      var result = this.studentList.find(item => item.studentId == row.studentId);
-      return result ? result.name : '';
+      var result = this.selecOwntDictLabel(this.studentList, 'studentId', row.studentId);
+      return result.name;
     },
     courseIdFormat(row, column){
-      var result = this.courseList.find(item => item.coursetId == row.coursetId);
-      return result ? result.courseName : '';
+      var result = this.selecOwntDictLabel(this.courseList, 'coursetId',  row.coursetId);
+      return result.courseName;
     },
     /** 查询分数列表 */
     getList() {
