@@ -88,10 +88,10 @@
     <el-table v-loading="loading" :data="postList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="postId" />
-      <el-table-column label="发帖人ID" align="center" prop="userId" />
+      <el-table-column label="发帖人姓名" align="center" prop="user.nickName" />
       <el-table-column label="帖子标题" align="center" prop="title" />
       <el-table-column label="帖子内容" align="center" prop="content" />
-      <el-table-column label="分类ID" align="center" prop="categoryId" />
+      <el-table-column label="分类" align="center" prop="categoryId" :formatter="categoryIdFormat"/>
       <el-table-column label="浏览量" align="center" prop="viewCount" />
       <el-table-column label="封面图路径" align="center" prop="coverImage" width="100">
         <template slot-scope="scope">
@@ -214,6 +214,8 @@ export default {
           { required: true, message: "发帖时间不能为空", trigger: "blur" }
         ],
       },
+      //分类数据字典
+      categoryList: [],
       //分类配置
       categoryIdConfigure: {
         title: "分类选择",
@@ -233,8 +235,17 @@ export default {
   },
   created() {
     this.getList();
+    // 获取分类数据字典
+    listCategory().then(response => {
+      this.categoryList = response.rows
+    })
   },
   methods: {
+    // 数据格式化
+    categoryIdFormat(row, column){
+      var result = this.selecOwntDictLabel(this.categoryList, 'categoryId', row.categoryId);
+      return result.name;
+    },
     /** 查询论坛主题列表 */
     getList() {
       this.loading = true

@@ -1,5 +1,6 @@
 package com.ruoyi.bbs.domain;
 
+import com.ruoyi.common.core.domain.entity.SysUser;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -21,6 +22,10 @@ public class BbsPost extends BaseEntity
     /** 发帖人ID（关联 sys_user.user_id） */
     @Excel(name = "发帖人ID", readConverterExp = "关=联,s=ys_user.user_id")
     private Long userId;
+
+    /** 发帖人全部信息 */
+    @Excel(name = "发帖人全部信息")
+    private SysUser user;
 
     /** 帖子标题 */
     @Excel(name = "帖子标题")
@@ -60,6 +65,14 @@ public class BbsPost extends BaseEntity
     public Long getUserId() 
     {
         return userId;
+    }
+
+    public SysUser getUser() {
+        return user;
+    }
+
+    public void setUser(SysUser user) {
+        this.user = user;
     }
 
     public void setTitle(String title) 
@@ -117,6 +130,7 @@ public class BbsPost extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("postId", getPostId())
             .append("userId", getUserId())
+            .append("user", getUser())
             .append("title", getTitle())
             .append("content", getContent())
             .append("categoryId", getCategoryId())

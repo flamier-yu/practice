@@ -1,7 +1,15 @@
 package com.ruoyi.bbs.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.bean.BeanUtils;
+import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.system.service.impl.SysUserServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.bbs.mapper.BbsPostMapper;
@@ -17,8 +25,11 @@ import com.ruoyi.bbs.service.IBbsPostService;
 @Service
 public class BbsPostServiceImpl implements IBbsPostService 
 {
+    private static final Logger log = LoggerFactory.getLogger(BbsPostServiceImpl.class);
     @Autowired
     private BbsPostMapper bbsPostMapper;
+    @Autowired
+    private ISysUserService sysUserService;
 
     /**
      * 查询论坛主题
@@ -41,7 +52,18 @@ public class BbsPostServiceImpl implements IBbsPostService
     @Override
     public List<BbsPost> selectBbsPostList(BbsPost bbsPost)
     {
-        return bbsPostMapper.selectBbsPostList(bbsPost);
+        List<BbsPost> BbsPosts = bbsPostMapper.selectBbsPostList(bbsPost);
+        //处理并将需要查询的数据插入进去,此处为用户信息
+        List<BbsPost> resultList = BbsPosts.stream().map(item -> {
+            BbsPost voBbsPosts = new BbsPost();
+            // 复制评论基础字段
+            BeanUtils.copyProperties(item, voBbsPosts);
+            // 根据 userid 查询用户信息
+            SysUser user = sysUserService.selectUserById(item.getUserId());
+            voBbsPosts.setUser(user); // 将用户对象注入VO
+            return voBbsPosts;
+        }).collect(Collectors.toList());
+        return resultList;
     }
 
     /**
