@@ -150,7 +150,8 @@
           <el-input v-model="form.viewCount" placeholder="请输入浏览量" />
         </el-form-item> -->
         <el-form-item label="封面图路径" prop="coverImage">
-          <image-upload v-model="form.coverImage"/>
+          <!-- <image-upload v-model="form.coverImage"/> -->
+          <ImageUpload v-model="form.coverImage" :limit="5"></ImageUpload>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -164,8 +165,12 @@
 <script>
 import { listPost, getPost, delPost, addPost, updatePost } from "@/api/bbs/post"
 import { listCategory } from "@/api/bbs/category"
+import ImageUpload from "@/components/ImageUpload/index"
 export default {
   name: "Post",
+  component: {
+    ImageUpload
+  },
   data() {
     return {
       // 遮罩层

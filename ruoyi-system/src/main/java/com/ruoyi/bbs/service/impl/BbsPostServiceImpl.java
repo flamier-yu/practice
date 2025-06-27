@@ -3,6 +3,8 @@ package com.ruoyi.bbs.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ruoyi.bbs.domain.BbsImage;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.bean.BeanUtils;

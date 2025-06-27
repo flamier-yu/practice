@@ -77,7 +77,8 @@ public class BbsPostController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody BbsPost bbsPost)
     {
-        return toAjax(bbsPostService.insertBbsPost(bbsPost));
+        return toAjax(bbsPostService.insertBbsPost(bbsPost))
+                .put("postId", bbsPost.getPostId());
     }
 
     /**

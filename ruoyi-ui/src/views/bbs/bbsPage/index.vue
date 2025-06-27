@@ -6,15 +6,19 @@
       </el-carousel-item>
     </el-carousel>
     <div class="content">
-      <div class="content_main" v-for="item in postList" :key="item" :value="item">
-        <div class="user">
+      <div class="content_main">
+        <div class="content_main_one" v-for="item in postList" :key="item.postId" :value="item.title">
           <div class="avatar-wrapper">
             <!-- <img :src="item.user.nickName" class="user-avatar"> -->
             <span class="user-nickname"> {{ item.user.nickName }} </span>
           </div>
+          <div class="content_main_post">
+            <div class="content_main_post_title">{{item.title}}</div>
+            <p v-html="item.content" ></p>
+            <image-preview :src="item.coverImage" :width="150" :height="150"/>
+          </div>
+          <div class="content_main_like"></div>
         </div>
-        <div></div>
-        <div></div>
       </div>
     </div>
   </div>
@@ -107,42 +111,56 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 1000px;
   }
 
   .content_main{
     width: 90%;
-    height: 300px;
-    background-color: blue;
-    color: #ffffff;
+    /* background-color: blue; */
+    color: black;
+    margin-top: 100px;
   }
 
-  .user{
+  .content_main_one{
     width: 100%;
-    height: 100px;
-    background-color: black;
-  }
-
-  .avatar-container {
     margin-right: 0px;
     padding-right: 0px;
-
-    .avatar-wrapper {
-      margin-top: 10px;
-      position: relative;
-
-      .user-avatar {
-        cursor: pointer;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-      }
-
-      .user-nickname{
-        position: relative;
-        bottom: 10px;
-        font-size: 14px;
-        font-weight: bold;
-      }
+    &:hover {
+      cursor: pointer;
+      transition: background .3s;
+      background: #d3dce6;
     }
+  }
+
+  .avatar-wrapper {
+
+    .user-avatar {
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+
+    .user-nickname{
+      bottom: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #595959;
+    }
+  }
+
+  .content_main_post{
+    width: 100%;
+    height: 60%;
+
+    .content_main_post_title{
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+
+  .content_main_like{
+    width: 100%;
+    height: 20%;
   }
 </style>
